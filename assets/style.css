@@ -1,0 +1,23 @@
+.habit-container {
+    margin-top: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.progress {
+    display: flex;
+    flex-grow: 1;
+}
+
+.logged-habits {
+    display: flex;
+    flex-grow: 1;
+    margin-top: 10px;
+    justify-content: space-between;
+}
+
+.tracking-button {
+    display: flex;
+    flex-grow: 1;
+}
