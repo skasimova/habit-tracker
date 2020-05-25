@@ -18,6 +18,12 @@ body {
     flex-direction: column;
 }
 
+.delete-button {
+    display: flex;
+    justify-content: flex-end;
+
+}
+
 .progress {
     display: flex;
     flex-grow: 1;
@@ -28,9 +34,4 @@ body {
     flex-grow: 1;
     margin-top: 10px;
     justify-content: space-between;
-}
-
-.tracking-button {
-    display: flex;
-    flex-grow: 1;
 }
