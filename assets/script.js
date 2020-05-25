@@ -4,6 +4,14 @@ form.addEventListener('submit', event => {
     event.preventDefault();
 
     createHabit('test');
+
+    let habit = {
+        text: document.getElementById('habit-text').value,
+        currentRepetitions: 0,
+        maxRepetitions: parseInt(document.getElementById('num-of-repetitions').value),
+    };
+
+    saveHabit(habit);
 })
 
 
@@ -56,3 +64,28 @@ function createHabit(habitText) {
 
     habitContainer.appendChild(habit);
 }
+
+function saveHabit(habit) {
+    let habits = getHabits();
+
+    habits.push(habit);
+
+    saveHabits(habits);
+}
+
+function getHabits() {
+    let habits = [];
+
+    if (localStorage.getItem('habits') !== null) {
+        habits = JSON.parse(localStorage.getItem('habits'));
+    }
+
+    return habits;
+}
+
+function saveHabits(habits) {
+    let jsonHabits = JSON.stringify(habits);
+
+    localStorage.setItem('habits', jsonHabits);
+}
+
