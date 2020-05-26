@@ -32,6 +32,16 @@ function createHabit(habitText) {
     deleteButton.setAttribute('class', 'btn btn-sm btn-outline-danger');
     deleteButton.innerHTML = 'x';
 
+    deleteButton.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        setTimeout(() => {
+            habit.remove();
+            localStorage.deleteHabit(habitText);
+        }, 200);
+    });
+
     habitHeader.appendChild(habitName);
     habitHeader.appendChild(deleteButton);
 
@@ -89,3 +99,18 @@ function saveHabits(habits) {
     localStorage.setItem('habits', jsonHabits);
 }
 
+function deleteHabit(habitText) {
+    let habit = getHabits();
+
+    if (habit) {
+        habit.some(function (currentHabit, index) {
+            if (currentHabit.text === habitText) {
+                habit.splice(index, 1);
+                return true;
+            }
+        });
+
+        saveHabits(habits);
+    }
+
+}
