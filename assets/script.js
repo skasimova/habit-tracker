@@ -59,9 +59,16 @@ function createHabit(habitText) {
     let loggedHabits = document.createElement('div');
     loggedHabits.setAttribute('class', 'logged-habits');
 
+    let initialNumber = document.createElement('span');
+    initialNumber.innerHTML = '0';
+
+    let maxNumber = document.createElement('span');
+    maxNumber.innerHTML = ' / ' + getNumOfReps();
+
     let numOfRepetitions = document.createElement('div');
     numOfRepetitions.setAttribute('class', 'num-of-times');
-    numOfRepetitions.innerHTML = '0/' + getNumOfReps();
+    numOfRepetitions.appendChild(initialNumber);
+    numOfRepetitions.appendChild(maxNumber);
 
     let plusButton = document.createElement('button');
     plusButton.setAttribute('class', 'btn btn-success');
@@ -71,10 +78,10 @@ function createHabit(habitText) {
         event.preventDefault();
         event.stopPropagation();
 
-        setTimeout(() => {
-            localStorage.addRepetition(repetition);
-        }, 200);
+        let currentNumber = parseInt(initialNumber.textContent) + 1;
+        initialNumber.innerHTML = currentNumber;
     });
+
 
     loggedHabits.appendChild(numOfRepetitions);
     loggedHabits.appendChild(plusButton);
@@ -131,4 +138,9 @@ function getHabitName() {
 
 function getNumOfReps() {
     return document.getElementById('num-of-repetitions').value;
+}
+
+function followingNumOfReps() {
+    let initialNumOfReps = document.getElementsByClassName('num-of-times').value;
+    return initialNumOfReps + 1;
 }
