@@ -79,9 +79,14 @@ function createHabit(habitText) {
         event.stopPropagation();
 
         let currentNumber = parseInt(initialNumber.textContent) + 1;
-        if (currentNumber <= getNumOfReps()) {
+        if (currentNumber < parseInt(getNumOfReps())) {
             initialNumber.innerHTML = currentNumber;
+        } else if (currentNumber === parseInt(getNumOfReps())) {
+            initialNumber.innerHTML = 'Congrats!';
+            maxNumber.innerHTML = '';
         }
+
+
     });
 
 
