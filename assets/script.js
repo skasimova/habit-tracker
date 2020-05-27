@@ -82,11 +82,10 @@ function createHabit(habitText) {
         if (currentNumber < parseInt(getNumOfReps())) {
             initialNumber.innerHTML = currentNumber;
         } else if (currentNumber === parseInt(getNumOfReps())) {
-            initialNumber.innerHTML = 'Congrats!';
+            initialNumber.innerHTML = 'Complete!';
             maxNumber.innerHTML = '';
+            plusButton.remove();
         }
-
-
     });
 
 
@@ -147,7 +146,3 @@ function getNumOfReps() {
     return document.getElementById('num-of-repetitions').value;
 }
 
-function followingNumOfReps() {
-    let initialNumOfReps = document.getElementsByClassName('num-of-times').value;
-    return initialNumOfReps + 1;
-}
