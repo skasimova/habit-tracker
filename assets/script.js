@@ -61,6 +61,7 @@ function createHabit(habitText) {
 
     let numOfRepetitions = document.createElement('div');
     numOfRepetitions.setAttribute('class', 'num-of-times');
+    numOfRepetitions.innerHTML = '0/' + getNumOfReps();
 
     let plusButton = document.createElement('button');
     plusButton.setAttribute('class', 'btn btn-success');
@@ -126,4 +127,8 @@ function deleteHabit(habitText) {
 
 function getHabitName() {
     return document.getElementById('habit-text').value;
+}
+
+function getNumOfReps() {
+    return document.getElementById('num-of-repetitions').value;
 }
