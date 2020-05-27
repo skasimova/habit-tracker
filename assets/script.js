@@ -3,7 +3,7 @@ let form = document.getElementById('add-habit');
 form.addEventListener('submit', event => {
     event.preventDefault();
 
-    createHabit('test');
+    createHabit();
 
     let habit = {
         text: document.getElementById('habit-text').value,
@@ -12,6 +12,7 @@ form.addEventListener('submit', event => {
     };
 
     saveHabit(habit);
+
 })
 
 
@@ -23,10 +24,10 @@ function createHabit(habitText) {
 
     let habitHeader = document.createElement('div');
     habitHeader.setAttribute('class', 'habit-header');
-    habitHeader.innerHTML = 'Added habit';
 
     let habitName = document.createElement('div');
     habitName.setAttribute('class', 'habit-name');
+    habitHeader.innerHTML = getHabitName();
 
     let deleteButton = document.createElement('button');
     deleteButton.setAttribute('class', 'btn btn-sm btn-outline-danger');
@@ -64,6 +65,15 @@ function createHabit(habitText) {
     let plusButton = document.createElement('button');
     plusButton.setAttribute('class', 'btn btn-success');
     plusButton.innerHTML = '+';
+
+    plusButton.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        setTimeout(() => {
+            localStorage.addRepetition(repetition);
+        }, 200);
+    });
 
     loggedHabits.appendChild(numOfRepetitions);
     loggedHabits.appendChild(plusButton);
@@ -112,5 +122,8 @@ function deleteHabit(habitText) {
 
         saveHabits(habits);
     }
+}
 
+function getHabitName() {
+    return document.getElementById('habit-text').value;
 }
