@@ -3,20 +3,18 @@ let form = document.getElementById('add-habit');
 form.addEventListener('submit', event => {
     event.preventDefault();
 
-    createHabit();
-
     let habit = {
         text: document.getElementById('habit-text').value,
         currentRepetitions: 0,
         maxRepetitions: parseInt(document.getElementById('num-of-repetitions').value),
     };
 
+    createHabit(habit);
     saveHabit(habit);
-
 })
 
-
-function createHabit(habitText) {
+// habitData -- массив habit выше
+function createHabit(habitData) {
     let habitContainer = document.getElementById('habit-container');
 
     let habit = document.createElement('div');
@@ -27,7 +25,7 @@ function createHabit(habitText) {
 
     let habitName = document.createElement('div');
     habitName.setAttribute('class', 'habit-name');
-    habitHeader.innerHTML = getHabitName();
+    habitHeader.innerHTML = habitData.text;
 
     let deleteButton = document.createElement('button');
     deleteButton.setAttribute('class', 'btn btn-sm btn-outline-danger');
@@ -39,7 +37,7 @@ function createHabit(habitText) {
 
         setTimeout(() => {
             habit.remove();
-            localStorage.deleteHabit(habitText);
+            deleteHabit(habitData.text);
         }, 200);
     });
 
@@ -60,10 +58,10 @@ function createHabit(habitText) {
     loggedHabits.setAttribute('class', 'logged-habits');
 
     let initialNumber = document.createElement('span');
-    initialNumber.innerHTML = '0';
+    initialNumber.innerHTML = habitData.currentRepetitions;
 
     let maxNumber = document.createElement('span');
-    maxNumber.innerHTML = ' / ' + getNumOfReps();
+    maxNumber.innerHTML = ' / ' + habitData.maxRepetitions;
 
     let numOfRepetitions = document.createElement('div');
     numOfRepetitions.setAttribute('class', 'num-of-times');
@@ -79,9 +77,9 @@ function createHabit(habitText) {
         event.stopPropagation();
 
         let currentNumber = parseInt(initialNumber.textContent) + 1;
-        if (currentNumber < parseInt(getNumOfReps())) {
+        if (currentNumber < habitData.maxRepetitions) {
             initialNumber.innerHTML = currentNumber;
-        } else if (currentNumber === parseInt(getNumOfReps())) {
+        } else if (currentNumber === habitData.maxRepetitions) {
             initialNumber.innerHTML = 'Complete!';
             maxNumber.innerHTML = '';
             plusButton.remove();
@@ -124,12 +122,12 @@ function saveHabits(habits) {
 }
 
 function deleteHabit(habitText) {
-    let habit = getHabits();
+    let habits = getHabits();
 
-    if (habit) {
-        habit.some(function (currentHabit, index) {
+    if (habits) {
+        habits.some(function (currentHabit, index) {
             if (currentHabit.text === habitText) {
-                habit.splice(index, 1);
+                habits.splice(index, 1);
                 return true;
             }
         });
@@ -138,11 +136,11 @@ function deleteHabit(habitText) {
     }
 }
 
-function getHabitName() {
-    return document.getElementById('habit-text').value;
+function extractFromLocalStorage() {
+    let habits = getHabits();
+    habits.forEach(habit => {
+        createHabit(habit);
+    })
 }
 
-function getNumOfReps() {
-    return document.getElementById('num-of-repetitions').value;
-}
-
+extractFromLocalStorage();
