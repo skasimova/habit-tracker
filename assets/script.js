@@ -25,7 +25,7 @@ function createHabit(habitData) {
 
     let habitName = document.createElement('div');
     habitName.setAttribute('class', 'habit-name');
-    habitHeader.innerHTML = habitData.text;
+    habitName.innerHTML = habitData.text;
 
     let deleteButton = document.createElement('button');
     deleteButton.setAttribute('class', 'btn btn-sm btn-outline-danger');
@@ -47,10 +47,12 @@ function createHabit(habitData) {
     let progress = document.createElement('div');
     progress.setAttribute('class', 'progress');
 
+    let percentage = Math.ceil((habitData.currentRepetitions / habitData.maxRepetitions) * 100);
+
     let progressBar = document.createElement('div');
     progressBar.setAttribute('class', 'progress-bar');
-    progressBar.setAttribute('style', 'width: ' + '' + '%');
-    progressBar.innerHTML = '' + '%';
+    progressBar.setAttribute('style', 'width: ' + percentage + '%');
+    progressBar.innerHTML = percentage + '%';
 
     progress.appendChild(progressBar);
 
@@ -58,7 +60,12 @@ function createHabit(habitData) {
     loggedHabits.setAttribute('class', 'logged-habits');
 
     let initialNumber = document.createElement('span');
-    initialNumber.innerHTML = habitData.currentRepetitions;
+
+    if (habitData.currentRepetitions < habitData.maxRepetitions) {
+        initialNumber.innerHTML = habitData.currentRepetitions;
+    } else {
+        initialNumber.innerHTML = 'Complete!';
+    }
 
     let maxNumber = document.createElement('span');
     maxNumber.innerHTML = ' / ' + habitData.maxRepetitions;
@@ -66,10 +73,13 @@ function createHabit(habitData) {
     let numOfRepetitions = document.createElement('div');
     numOfRepetitions.setAttribute('class', 'num-of-times');
     numOfRepetitions.appendChild(initialNumber);
-    numOfRepetitions.appendChild(maxNumber);
+
+    if (habitData.currentRepetitions < habitData.maxRepetitions) {
+        numOfRepetitions.appendChild(maxNumber);
+    }
 
     let plusButton = document.createElement('button');
-    plusButton.setAttribute('class', 'btn btn-success');
+    plusButton.setAttribute('class', 'btn btn-sm btn-success');
     plusButton.innerHTML = '+';
 
     plusButton.addEventListener('click', event => {
@@ -77,18 +87,30 @@ function createHabit(habitData) {
         event.stopPropagation();
 
         let currentNumber = parseInt(initialNumber.textContent) + 1;
+
         if (currentNumber < habitData.maxRepetitions) {
             initialNumber.innerHTML = currentNumber;
         } else if (currentNumber === habitData.maxRepetitions) {
             initialNumber.innerHTML = 'Complete!';
-            maxNumber.innerHTML = '';
+            maxNumber.remove();
             plusButton.remove();
         }
+
+        habitData.currentRepetitions = currentNumber;
+
+        updateHabit(habitData);
+
+        percentage = Math.ceil((habitData.currentRepetitions / habitData.maxRepetitions) * 100);
+        progressBar.setAttribute('style', 'width: ' + percentage + '%');
+        progressBar.innerHTML = percentage + '%';
     });
 
 
     loggedHabits.appendChild(numOfRepetitions);
-    loggedHabits.appendChild(plusButton);
+
+    if (habitData.currentRepetitions < habitData.maxRepetitions) {
+        loggedHabits.appendChild(plusButton);
+    }
 
     habit.appendChild(habitHeader);
     habit.appendChild(progress);
@@ -104,6 +126,20 @@ function saveHabit(habit) {
 
     saveHabits(habits);
 }
+
+function updateHabit(habit) {
+    let habits = getHabits();
+
+    habits.some(function (currentHabit, index) {
+        if (currentHabit.text === habit.text) {
+            habits[index] = habit;
+            return true;
+        }
+    });
+
+    saveHabits(habits);
+}
+
 
 function getHabits() {
     let habits = [];
