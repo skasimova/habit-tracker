@@ -22,14 +22,14 @@ body {
 }
 
 .habit-container {
-  margin-top: 3vh;
+  margin-top: 7vh;
 }
 
 .habit {
   text-align: left;
 }
 .habit + .habit {
-  margin-top: 30px;
+  margin-top: 5vh;
 }
 .habit .habit-header {
   display: flex;
