@@ -1,43 +1,55 @@
 body {
-    font-family: 'Karla', sans-serif;
-    font-size: 1.5em;
+  font-family: "Karla", sans-serif;
+  font-size: 1.4em;
 }
 
-.row {
-    margin-top: 20px;
+.main-title {
+  margin-bottom: 20px;
 }
 
-.container {
-    margin-top: 10vh;
-    margin-bottom: 15vh;
+.page-wrap {
+  margin-top: 10vh;
+  margin-bottom: 15vh;
+  text-align: center;
+}
+
+.habit-form-create .link-container {
+  font-size: 0.7em;
+  margin-top: 5px;
+}
+.habit-form-create .button-container {
+  margin-top: 15px;
 }
 
 .habit-container {
-    margin-top: 20px;
-    text-align: left;
-
+  margin-top: 3vh;
 }
 
-.habit-header {
-    display: flex;
-    flex-grow: 1;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+.habit {
+  text-align: left;
+}
+.habit + .habit {
+  margin-top: 30px;
+}
+.habit .habit-header {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.habit .habit-header .habit-name {
+  line-height: 1;
+}
+.habit .habit-footer {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+.habit .habit-footer .habit-repetitions {
+  line-height: 1;
 }
 
-.habit-name {
-    line-height: 1;
-}
-
-.logged-habits {
-    display: flex;
-    flex-grow: 1;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.num-of-times {
-    line-height: 1;
-}
+/*# sourceMappingURL=style.css.map */

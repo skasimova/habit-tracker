@@ -2,43 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+
+    <title>Habit tracker</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
-
-    <title>Habit tracker</title>
 </head>
 <body>
-<div class="container text-center page-wrap">
-    <h1>Habit tracker</h1>
+<div class="container page-wrap">
     <div class="row justify-content-md-center">
         <div class="col col-12 col-md-10 col-lg-8 col-xl-6">
-            <form id="add-habit">
-                <div class="form-group" id="habit-title">
+            <h1 class="main-title">Habit tracker</h1>
+
+            <form id="add-habit" class="habit-form-create">
+                <div class="form-group">
                     <label for="habit-text">Habit title</label>
-                    <input type="text" id="habit-text" class="form-control" required>
+                    <input type="text" id="habit-text" class="form-control" placeholder="e.g. Eat veggies with every meal" autocomplete="off"
+                           oninvalid="this.setCustomValidity('Please enter a title for your habit')"
+                           oninput="setCustomValidity('')" required>
                 </div>
-                <div class="form-group" id="repetitions">
+
+                <div class="form-group">
                     <label for="num-of-repetitions">Number of repetitions</label>
-                    <input type="text" class="form-control" id="num-of-repetitions" placeholder="How many times you need to repeat this action to develop a habit?" required>
+                    <input type="number" class="form-control" id="num-of-repetitions" min="2" max="1000" autocomplete="off"
+                           oninvalid="this.setCustomValidity('You can enter any number between 2 and 1000')"
+                           oninput="setCustomValidity('')" placeholder="How many times you want to repeat this action?" required>
+                    <div class="link-container">
+                        <a href="https://jamesclear.com/new-habit" class="link" target="_blank">Tip: How long does it take to form a habit?</a>
+                    </div>
                 </div>
+
                 <div class="button-container">
                     <button class="btn btn-success" id="add-button" type="submit">Add</button>
                 </div>
             </form>
 
-
-            <div class="habit-container" id="habit-container">
-
-            </div>
+            <div class="habit-container" id="habit-container"></div>
         </div>
-
     </div>
-
-
 </div>
+
 <script type="text/javascript" src="assets/script.js"></script>
 </body>
 </html>
