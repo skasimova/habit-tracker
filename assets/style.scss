@@ -8,9 +8,14 @@ body {
 }
 
 .page-wrap {
-  margin-top: 10vh;
-  margin-bottom: 15vh;
+  margin-top: 5vh;
+  margin-bottom: 10vh;
   text-align: center;
+
+  @media (min-width: 1000px) {
+    margin-top: 10vh;
+    margin-bottom: 20vh;
+  }
 }
 
 .habit-form-create {
@@ -25,14 +30,22 @@ body {
 }
 
 .habit-container {
-  margin-top: 7vh;
+  margin-top: 5vh;
+
+  @media (min-width: 1000px) {
+      margin-top: 7vh;
+    }
 }
 
 .habit {
   text-align: left;
 
   & + & {
-    margin-top: 5vh;
+    margin-top: 2vh;
+
+    @media (min-width: 1000px) {
+      margin-top: 5vh;
+    }
   }
 
   .habit-header {
