@@ -1,15 +1,38 @@
-let form = document.getElementById('add-habit');
+// Constants
+const Selector = {
+    FORM: 'add-habit',
+    HABIT_TEXT: 'habit-text',
+    HABIT_NUMBER: 'num-of-repetitions',
+    CONTAINER: 'habit-container',
+}
+
+// Elements
+const form = document.getElementById(Selector.FORM);
+const textInput = document.getElementById(Selector.HABIT_TEXT);
+const numberInput = document.getElementById(Selector.HABIT_NUMBER);
+const habitContainer = document.getElementById(Selector.CONTAINER);
+
+// Functions
+const onDelClick = (habit, habitData) => {
+    const timeout = setTimeout(() => {
+        habit.remove();
+        deleteHabit(habitData.text);
+        clearTimeout(timeout);
+    }, 200);
+}
+
+//
 
 form.addEventListener('submit', event => {
     event.preventDefault();
 
     let habit = {
-        text: document.getElementById('habit-text').value,
+        text: textInput.value,
         currentRepetitions: 0,
-        maxRepetitions: parseInt(document.getElementById('num-of-repetitions').value),
+        maxRepetitions: parseInt(numberInput.value),
     };
-    document.getElementById('habit-text').value = '';
-    document.getElementById('num-of-repetitions').value = '';
+    textInput.value = '';
+    numberInput.value = '';
 
     createHabit(habit);
     saveHabit(habit);
@@ -17,66 +40,59 @@ form.addEventListener('submit', event => {
 
 // habitData -- массив habit выше
 function createHabit(habitData) {
-    let habitContainer = document.getElementById('habit-container');
-
     let habit = document.createElement('div');
-    habit.setAttribute('class', 'habit card');
+    habit.classList.add('habit', 'card');
 
     let habitBody = document.createElement('div');
-    habitBody.setAttribute('class', 'card-body');
+    habitBody.classList.add('card-body');
 
     let habitHeader = document.createElement('div');
-    habitHeader.setAttribute('class', 'habit-header');
+    habitHeader.classList.add('habit-header');
 
     let habitName = document.createElement('div');
-    habitName.setAttribute('class', 'habit-name');
-    habitName.innerHTML = habitData.text;
+    habitName.classList.add('habit-name');
+    habitName.innerText = habitData.text;
 
     let deleteButton = document.createElement('button');
-    deleteButton.setAttribute('class', 'btn btn-sm btn-outline-danger');
-    deleteButton.innerHTML = 'del';
+    deleteButton.classList.add('btn', 'btn-sm', 'btn-outline-danger');
+    deleteButton.innerText = 'del';
 
-    deleteButton.addEventListener('click', event => {
-        event.preventDefault();
-        event.stopPropagation();
-
-        setTimeout(() => {
-            habit.remove();
-            deleteHabit(habitData.text);
-        }, 200);
-    });
+    deleteButton.addEventListener('click', () => onDelClick(habit, habitData));
 
     habitHeader.appendChild(habitName);
     habitHeader.appendChild(deleteButton);
 
     let progress = document.createElement('div');
-    progress.setAttribute('class', 'progress');
+    progress.classList.add('progress');
 
     let percentage = Math.ceil((habitData.currentRepetitions / habitData.maxRepetitions) * 100);
 
     let progressBar = document.createElement('div');
-    progressBar.setAttribute('class', 'progress-bar' + (percentage === 100 ? ' bg-success' : ''));
+    progressBar.classList.add('progress-bar');
+    if (percentage === 100) {
+        progressBar.classList.add('bg-success');
+    }
     progressBar.setAttribute('style', 'width: ' + percentage + '%');
-    progressBar.innerHTML = percentage + '%';
+    progressBar.innerText = percentage + '%';
 
     progress.appendChild(progressBar);
 
     let habitFooter = document.createElement('div');
-    habitFooter.setAttribute('class', 'habit-footer');
+    habitFooter.classList.add('habit-footer');
 
     let initialNumber = document.createElement('span');
 
     if (habitData.currentRepetitions < habitData.maxRepetitions) {
-        initialNumber.innerHTML = habitData.currentRepetitions;
+        initialNumber.innerText = habitData.currentRepetitions;
     } else {
-        initialNumber.innerHTML = 'Complete!';
+        initialNumber.innerText = 'Complete!';
     }
 
     let maxNumber = document.createElement('span');
-    maxNumber.innerHTML = ' / ' + habitData.maxRepetitions;
+    maxNumber.innerText = ' / ' + habitData.maxRepetitions;
 
     let habitRepetitions = document.createElement('div');
-    habitRepetitions.setAttribute('class', 'habit-repetitions');
+    habitRepetitions.classList.add('habit-repetitions');
     habitRepetitions.appendChild(initialNumber);
 
     if (habitData.currentRepetitions < habitData.maxRepetitions) {
@@ -84,8 +100,8 @@ function createHabit(habitData) {
     }
 
     let plusButton = document.createElement('button');
-    plusButton.setAttribute('class', 'btn btn-sm btn-outline-success');
-    plusButton.innerHTML = 'log';
+    plusButton.classList.add('btn', 'btn-sm', 'btn-outline-success');
+    plusButton.innerText = 'log';
 
     plusButton.addEventListener('click', event => {
         event.preventDefault();
@@ -94,9 +110,9 @@ function createHabit(habitData) {
         let currentNumber = parseInt(initialNumber.textContent) + 1;
 
         if (currentNumber < habitData.maxRepetitions) {
-            initialNumber.innerHTML = currentNumber;
+            initialNumber.innerText = currentNumber;
         } else if (currentNumber === habitData.maxRepetitions) {
-            initialNumber.innerHTML = 'Complete!';
+            initialNumber.innerText = 'Complete!';
             maxNumber.remove();
             plusButton.remove();
         }
@@ -106,9 +122,11 @@ function createHabit(habitData) {
         updateHabit(habitData);
 
         percentage = Math.ceil((habitData.currentRepetitions / habitData.maxRepetitions) * 100);
-        progressBar.setAttribute('class', 'progress-bar' + (percentage === 100 ? ' bg-success' : ''));
+        if (percentage === 100) {
+            progressBar.classList.add('bg-success');
+        }
         progressBar.setAttribute('style', 'width: ' + percentage + '%');
-        progressBar.innerHTML = percentage + '%';
+        progressBar.innerText = percentage + '%';
     });
 
 
