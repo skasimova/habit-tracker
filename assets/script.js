@@ -72,8 +72,8 @@ function createHabit(habitData) {
     if (percentage === 100) {
         progressBar.classList.add('bg-success');
     }
-    progressBar.setAttribute('style', 'width: ' + percentage + '%');
-    progressBar.innerText = percentage + '%';
+    progressBar.setAttribute('style', `width: ${percentage}%`);
+    progressBar.innerText = `${percentage}%`;
 
     progress.appendChild(progressBar);
 
