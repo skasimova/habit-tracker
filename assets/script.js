@@ -6,6 +6,14 @@ const Selector = {
     CONTAINER: 'habit-container',
 }
 
+const Class = {
+    BODY: 'card-body',
+    HEADER: 'habit-header',
+    NAME: 'habit-name',
+    PROGRESS: 'progress',
+    PROGRESS_BAR: 'progress-bar',
+}
+
 // Elements
 const form = document.getElementById(Selector.FORM);
 const textInput = document.getElementById(Selector.HABIT_TEXT);
@@ -31,11 +39,20 @@ form.addEventListener('submit', event => {
         currentRepetitions: 0,
         maxRepetitions: parseInt(numberInput.value),
     };
+
+    const trimmedValue = textInput.value.trim();
+    if (trimmedValue === "") {
+        alert('Please enter something other than spaces ;)');
+        textInput.value = '';
+        return false;
+    } else {
+        createHabit(habit);
+        saveHabit(habit);
+    }
+
     textInput.value = '';
     numberInput.value = '';
 
-    createHabit(habit);
-    saveHabit(habit);
 })
 
 // habitData -- массив habit выше
@@ -44,13 +61,13 @@ function createHabit(habitData) {
     habit.classList.add('habit', 'card');
 
     let habitBody = document.createElement('div');
-    habitBody.classList.add('card-body');
+    habitBody.classList.add(Class.BODY);
 
     let habitHeader = document.createElement('div');
-    habitHeader.classList.add('habit-header');
+    habitHeader.classList.add(Class.HEADER);
 
     let habitName = document.createElement('div');
-    habitName.classList.add('habit-name');
+    habitName.classList.add(Class.NAME);
     habitName.innerText = habitData.text;
 
     let deleteButton = document.createElement('button');
@@ -63,12 +80,12 @@ function createHabit(habitData) {
     habitHeader.appendChild(deleteButton);
 
     let progress = document.createElement('div');
-    progress.classList.add('progress');
+    progress.classList.add(Class.PROGRESS);
 
     let percentage = Math.ceil((habitData.currentRepetitions / habitData.maxRepetitions) * 100);
 
     let progressBar = document.createElement('div');
-    progressBar.classList.add('progress-bar');
+    progressBar.classList.add(Class.PROGRESS_BAR);
     if (percentage === 100) {
         progressBar.classList.add('bg-success');
     }
