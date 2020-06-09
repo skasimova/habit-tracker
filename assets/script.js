@@ -12,6 +12,9 @@ const Class = {
     NAME: 'habit-name',
     PROGRESS: 'progress',
     PROGRESS_BAR: 'progress-bar',
+    PROGRESS_SUCCESS: 'bg-success',
+    FOOTER: 'habit-footer',
+    REPETITIONS: 'habit-repetitions',
 }
 
 // Elements
@@ -87,7 +90,7 @@ function createHabit(habitData) {
     let progressBar = document.createElement('div');
     progressBar.classList.add(Class.PROGRESS_BAR);
     if (percentage === 100) {
-        progressBar.classList.add('bg-success');
+        progressBar.classList.add(Class.PROGRESS_SUCCESS);
     }
     progressBar.setAttribute('style', `width: ${percentage}%`);
     progressBar.innerText = `${percentage}%`;
@@ -95,7 +98,7 @@ function createHabit(habitData) {
     progress.appendChild(progressBar);
 
     let habitFooter = document.createElement('div');
-    habitFooter.classList.add('habit-footer');
+    habitFooter.classList.add(Class.FOOTER);
 
     let initialNumber = document.createElement('span');
 
@@ -109,7 +112,7 @@ function createHabit(habitData) {
     maxNumber.innerText = ' / ' + habitData.maxRepetitions;
 
     let habitRepetitions = document.createElement('div');
-    habitRepetitions.classList.add('habit-repetitions');
+    habitRepetitions.classList.add(Class.REPETITIONS);
     habitRepetitions.appendChild(initialNumber);
 
     if (habitData.currentRepetitions < habitData.maxRepetitions) {
@@ -140,7 +143,7 @@ function createHabit(habitData) {
 
         percentage = Math.ceil((habitData.currentRepetitions / habitData.maxRepetitions) * 100);
         if (percentage === 100) {
-            progressBar.classList.add('bg-success');
+            progressBar.classList.add(Class.PROGRESS_SUCCESS);
         }
         progressBar.setAttribute('style', 'width: ' + percentage + '%');
         progressBar.innerText = percentage + '%';
